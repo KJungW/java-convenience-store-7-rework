@@ -2,6 +2,7 @@ package store.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import store.domain.Product;
 import store.domain.Promotion;
 import store.repository.ProductRepository;
 import store.repository.PromotionRepository;
@@ -17,6 +18,28 @@ public class InitialSettingService {
     public InitialSettingService(ProductRepository productRepository, PromotionRepository promotionRepository) {
         this.productRepository = productRepository;
         this.promotionRepository = promotionRepository;
+    }
+
+    public void initialize(String productsFileName, String promotionFileName) {
+        setInitialPromotionByFile(promotionFileName);
+        setInitialProductByFile(productsFileName);
+    }
+
+    private void setInitialProductByFile(String fileName) {
+        List<String> rawProducts = FileUtility.readFileBySpace(fileName);
+        List<Product> products = rawProducts.stream()
+                .map(this::parseProduct)
+                .toList();
+        products.forEach(productRepository::add);
+    }
+
+    private Product parseProduct(String rawProduct) {
+        List<String> promotionParts = List.of(rawProduct.split(","));
+        String name = promotionParts.get(0);
+        int price = Integer.parseInt(promotionParts.get(1));
+        int quantity = Integer.parseInt(promotionParts.get(2));
+        String promotionName = promotionParts.get(3);
+        return new Product(name, price, quantity, promotionName);
     }
 
     private void setInitialPromotionByFile(String fileName) {
