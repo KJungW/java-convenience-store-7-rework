@@ -55,8 +55,16 @@ public class Product {
         promotionQuantity += quantity;
     }
 
+    public boolean isEmptyQuantity() {
+        return commonQuantity + promotionQuantity <= DEFAULT_QUANTITY;
+    }
+
     public int getCommonQuantity() {
         return commonQuantity;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public int getPromotionQuantity() {

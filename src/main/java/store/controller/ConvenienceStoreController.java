@@ -21,5 +21,7 @@ public class ConvenienceStoreController {
 
     public void run() {
         outputService.printWelcomeGreeting();
+        outputService.printProductGuideMessage();
+        outputService.printProductsInStore();
     }
 }

@@ -20,7 +20,7 @@ public class ApplicationConfiguration {
     private final InitialSettingService initialSettingService
             = new InitialSettingService(productRepository, promotionRepository);
     private final OutputService outputService
-            = new OutputService(outputView);
+            = new OutputService(outputView, productRepository);
 
     public InitialSettingService getInitialSettingService() {
         return initialSettingService;
