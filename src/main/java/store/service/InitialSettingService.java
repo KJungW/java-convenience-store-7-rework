@@ -67,6 +67,6 @@ public class InitialSettingService {
         int price = Integer.parseInt(promotionParts.get(1));
         int quantity = Integer.parseInt(promotionParts.get(2));
         String promotionName = promotionParts.get(3);
-        return new Product(name, price, quantity, promotionName);
+        return new Product(name, price, quantity, 0, promotionName);
     }
 }
