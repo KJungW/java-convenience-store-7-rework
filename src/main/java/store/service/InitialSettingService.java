@@ -66,14 +66,20 @@ public class InitialSettingService {
     private Set<Product> getInitialProductByFile(String fileName) {
         List<String> rawProducts = FileUtility.readFileBySpace(fileName);
         rawProducts.removeFirst();
-        List<Product> products = parseProduct(rawProducts);
-        return compositeCommonOrPromotionProducts(products);
+        return parseProduct(rawProducts);
     }
 
-    private List<Product> parseProduct(List<String> rawProducts) {
-        return rawProducts.stream()
-                .map(this::parseProduct)
-                .toList();
+    private Set<Product> parseProduct(List<String> rawProducts) {
+        Map<String, Product> productResult = new HashMap<>();
+        for (String rawProduct : rawProducts) {
+            Product parsedProduct = parseProduct(rawProduct);
+            if (productResult.containsKey(parsedProduct.getName())) {
+                compositeProduct(productResult.get(parsedProduct.getName()), parsedProduct);
+                continue;
+            }
+            productResult.put(parsedProduct.getName(), parsedProduct);
+        }
+        return new HashSet<>(productResult.values());
     }
 
     private Product parseProduct(String rawProduct) {
@@ -88,24 +94,13 @@ public class InitialSettingService {
         return new Product(name, price, quantity, promotionName);
     }
 
-    private Set<Product> compositeCommonOrPromotionProducts(List<Product> products) {
-        Map<String, Product> compositedResult = new HashMap<>();
-        for (Product product : products) {
-            if (compositedResult.containsKey(product.getName())) {
-                Product conpositedProduct = compositeProduct(compositedResult.get(product.getName()), product);
-                compositedResult.put(conpositedProduct.getName(), conpositedProduct);
-            }
-            compositedResult.put(product.getName(), product);
-        }
-        return new HashSet<>(compositedResult.values());
-    }
-
     private Product compositeProduct(Product originProduct, Product newProduct) {
         if (!originProduct.getName().equals(newProduct.getName())) {
             throw new IllegalArgumentException(ServiceExceptionMessage.NOT_SAME_PRODUCT.getMessage());
         }
         if (newProduct.checkIsPromoted()) {
             newProduct.addCommonQuantity(originProduct.getCommonQuantity());
+            return newProduct;
         }
         originProduct.addCommonQuantity(newProduct.getCommonQuantity());
         return originProduct;
