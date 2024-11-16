@@ -19,6 +19,13 @@ public class Product {
         this.promotionName = DEFAULT_PROMOTION_NAME;
     }
 
+    public Product(String name, int price, int promotionQuantity, String promotionName) {
+        this.name = name;
+        this.price = price;
+        this.commonQuantity = DEFAULT_QUANTITY;
+        this.promotionQuantity = promotionQuantity;
+        this.promotionName = promotionName;
+    }
 
     public Product(String name, int price, int commonQuantity, int promotionQuantity, String promotionName) {
         this.name = name;
@@ -34,5 +41,29 @@ public class Product {
 
     public Product copy() {
         return new Product(name, price, commonQuantity, promotionQuantity, promotionName);
+    }
+
+    public boolean checkIsPromoted() {
+        return !promotionName.isEmpty();
+    }
+
+    public void addCommonQuantity(int quantity) {
+        commonQuantity += quantity;
+    }
+
+    public void addPromotionQuantity(int quantity) {
+        promotionQuantity += quantity;
+    }
+
+    public int getCommonQuantity() {
+        return commonQuantity;
+    }
+
+    public int getPromotionQuantity() {
+        return promotionQuantity;
+    }
+
+    public String getPromotionName() {
+        return promotionName;
     }
 }
