@@ -14,6 +14,10 @@ public class BasketItem {
         return name;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     public BasketItem copy() {
         return new BasketItem(name, quantity);
     }

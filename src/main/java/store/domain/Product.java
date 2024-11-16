@@ -59,6 +59,10 @@ public class Product {
         return commonQuantity + promotionQuantity <= DEFAULT_QUANTITY;
     }
 
+    public boolean isEnoughQuantity(int quantity) {
+        return commonQuantity + promotionQuantity >= quantity;
+    }
+
     public int getCommonQuantity() {
         return commonQuantity;
     }
