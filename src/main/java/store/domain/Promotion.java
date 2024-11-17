@@ -1,5 +1,6 @@
 package store.domain;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDateTime;
 
 public class Promotion {
@@ -22,6 +23,18 @@ public class Promotion {
         this.giftCount = giftCount;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public int calculateAdditionalGiftCount(int quantity) {
+        int restQuantity = quantity % (purchaseCount + giftCount);
+        if (restQuantity == purchaseCount) {
+            return giftCount;
+        }
+        return 0;
+    }
+
+    public boolean isAvailable() {
+        return startDate.isBefore(DateTimes.now()) && endDate.isAfter(DateTimes.now());
     }
 
     public String getName() {
