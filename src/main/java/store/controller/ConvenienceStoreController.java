@@ -32,6 +32,6 @@ public class ConvenienceStoreController {
         outputService.printProductGuideMessage();
         outputService.printProductsInStore();
         List<BasketItem> basketItems = inputService.inputBasketItems();
-        basketService.addBasketItem(basketItems);
+        basketService.addBasketItems(basketItems);
     }
 }

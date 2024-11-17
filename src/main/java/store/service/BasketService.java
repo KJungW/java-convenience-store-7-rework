@@ -17,7 +17,7 @@ public class BasketService {
         this.productRepository = productRepository;
     }
 
-    public void addBasketItem(List<BasketItem> newBasketItems) {
+    public void addBasketItems(List<BasketItem> newBasketItems) {
         for (BasketItem item : newBasketItems) {
             if (!checkBasketItemQuantityIsEnough(item)) {
                 throw new IllegalArgumentException(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
