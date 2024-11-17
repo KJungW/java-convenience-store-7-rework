@@ -32,6 +32,11 @@ public class InputService {
         return parseYesOrNo(rawInput);
     }
 
+    public boolean inputMembershipDiscountAcceptance() {
+        String rawInput = inputView.inputMembershipDiscountAcceptance();
+        return parseYesOrNo(rawInput);
+    }
+
     private List<BasketItem> parseBasketItems(String input) {
         List<String> rawBasketItems = List.of(input.split(Separator.COMMA.getContent()));
         return rawBasketItems.stream()

@@ -25,4 +25,9 @@ public class InputView {
         System.out.println(guideMessage);
         return Console.readLine();
     }
+
+    public String inputMembershipDiscountAcceptance() {
+        System.out.println(InputGuideMessage.MEMBERSHIP_DISCOUNT_ACCEPTANCE_INPUT.getMessage());
+        return Console.readLine();
+    }
 }
