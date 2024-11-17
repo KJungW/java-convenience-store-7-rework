@@ -25,6 +25,14 @@ public class BasketService {
         }
     }
 
+    public void addBasketItemQuantity(String productName, int quantity) {
+        validateBasketItemExistence(productName);
+        BasketItem basketItem = basketItemRepository.find(productName);
+        basketItem.addQuantity(quantity);
+        validateEnoughQuantityForBasketItem(basketItem);
+        basketItemRepository.update(basketItem);
+    }
+
     private void validateEnoughQuantityForBasketItem(BasketItem basketItem) {
         if (!checkEnoughQuantityForBasketItem(basketItem)) {
             throw new IllegalArgumentException(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
@@ -44,5 +52,15 @@ public class BasketService {
 
     private boolean checkProductExistenceForBasketItem(BasketItem basketItem) {
         return productRepository.checkExistence(basketItem.getName());
+    }
+
+    private void validateBasketItemExistence(String productName) {
+        if (!checkBasketItemExistence(productName)) {
+            throw new IllegalArgumentException(ServiceExceptionMessage.NOT_EXIST_BASKET_ITEM.getMessage());
+        }
+    }
+
+    private boolean checkBasketItemExistence(String productName) {
+        return basketItemRepository.checkExistence(productName);
     }
 }

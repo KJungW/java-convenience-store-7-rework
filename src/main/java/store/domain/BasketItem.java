@@ -10,6 +10,10 @@ public class BasketItem {
         this.quantity = quantity;
     }
 
+    public void addQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
     public String getName() {
         return name;
     }
