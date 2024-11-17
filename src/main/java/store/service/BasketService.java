@@ -33,6 +33,18 @@ public class BasketService {
         basketItemRepository.update(basketItem);
     }
 
+    public void subtractBasketItemQuantity(String productName, int quantity) {
+        validateBasketItemExistence(productName);
+        BasketItem basketItem = basketItemRepository.find(productName);
+        validateQuantitySubtractionIsPossible(basketItem, quantity);
+        basketItem.subtractQuantity(quantity);
+        if (basketItem.getQuantity() > 0) {
+            basketItemRepository.update(basketItem);
+            return;
+        }
+        basketItemRepository.delete(basketItem.getName());
+    }
+
     private void validateEnoughQuantityForBasketItem(BasketItem basketItem) {
         if (!checkEnoughQuantityForBasketItem(basketItem)) {
             throw new IllegalArgumentException(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
@@ -62,5 +74,15 @@ public class BasketService {
 
     private boolean checkBasketItemExistence(String productName) {
         return basketItemRepository.checkExistence(productName);
+    }
+
+    private void validateQuantitySubtractionIsPossible(BasketItem basketItem, int quantity) {
+        if (!checkQuantitySubtractionIsPossible(basketItem, quantity)) {
+            throw new IllegalArgumentException(ServiceExceptionMessage.IMPOSSIBLE_QUANTITY_SUBTRACTION.getMessage());
+        }
+    }
+
+    private boolean checkQuantitySubtractionIsPossible(BasketItem basketItem, int quantity) {
+        return basketItem.checkQuantitySubtractionIsPossible(quantity);
     }
 }

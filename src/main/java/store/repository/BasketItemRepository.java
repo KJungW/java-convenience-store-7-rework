@@ -32,6 +32,11 @@ public class BasketItemRepository {
         basketItems.put(basketItem.getName(), basketItem);
     }
 
+    public void delete(String basketItemName) {
+        validateExistence(basketItemName);
+        basketItems.remove(basketItemName);
+    }
+
     public boolean checkExistence(String basketItemName) {
         return basketItems.containsKey(basketItemName);
     }
