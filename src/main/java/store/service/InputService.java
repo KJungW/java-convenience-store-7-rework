@@ -3,7 +3,9 @@ package store.service;
 import java.util.List;
 import store.constant.Separator;
 import store.constant.input.InputRounder;
+import store.constant.input.YesOrNo;
 import store.domain.BasketItem;
+import store.dto.AdditionalGiftItem;
 import store.view.InputView;
 
 public class InputService {
@@ -17,6 +19,11 @@ public class InputService {
     public List<BasketItem> inputBasketItems() {
         String rawInput = inputView.inputBasketItems();
         return parseBasketItems(rawInput);
+    }
+
+    public boolean inputAdditionalGiftItemAcceptance(AdditionalGiftItem giftItem) {
+        String rawInput = inputView.inputAdditionalGiftItemAcceptance(giftItem);
+        return parseYesOrNo(rawInput);
     }
 
     private List<BasketItem> parseBasketItems(String input) {
@@ -33,5 +40,9 @@ public class InputService {
         String name = basketItemParts.get(0);
         int quantity = Integer.parseInt(basketItemParts.get(1));
         return new BasketItem(name, quantity);
+    }
+
+    private boolean parseYesOrNo(String input) {
+        return YesOrNo.valueOf(input).getContent();
     }
 }
