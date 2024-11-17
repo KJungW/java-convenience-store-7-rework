@@ -36,6 +36,16 @@ public class ConvenienceStoreController {
         outputService.printProductsInStore();
         List<BasketItem> basketItems = inputService.inputBasketItems();
         basketService.addBasketItems(basketItems);
-        List<AdditionalGiftItem> additionalGiftItem = promotionService.findAdditionalGiftItem();
+        addAdditionalGiftItem();
+    }
+
+    private void addAdditionalGiftItem() {
+        List<AdditionalGiftItem> giftItems = promotionService.findAdditionalGiftItem();
+        for (AdditionalGiftItem item : giftItems) {
+            boolean isAcceptance = inputService.inputAdditionalGiftItemAcceptance(item);
+            if (isAcceptance) {
+                basketService.addBasketItemQuantity(item.getProductName(), item.getQuantity());
+            }
+        }
     }
 }
