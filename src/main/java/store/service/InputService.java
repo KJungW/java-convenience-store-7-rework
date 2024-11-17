@@ -6,6 +6,7 @@ import store.constant.input.InputRounder;
 import store.constant.input.YesOrNo;
 import store.domain.BasketItem;
 import store.dto.AdditionalGiftItem;
+import store.dto.NonPromotableItem;
 import store.view.InputView;
 
 public class InputService {
@@ -23,6 +24,11 @@ public class InputService {
 
     public boolean inputAdditionalGiftItemAcceptance(AdditionalGiftItem giftItem) {
         String rawInput = inputView.inputAdditionalGiftItemAcceptance(giftItem);
+        return parseYesOrNo(rawInput);
+    }
+
+    public boolean inputNonPromotableItemAcceptance(NonPromotableItem promotableItem) {
+        String rawInput = inputView.inputNonPromotableItemAcceptance(promotableItem);
         return parseYesOrNo(rawInput);
     }
 
