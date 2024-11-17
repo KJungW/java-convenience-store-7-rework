@@ -6,11 +6,13 @@ import store.constant.InitialSettingFileName;
 import store.domain.BasketItem;
 import store.dto.AdditionalGiftItem;
 import store.dto.NonPromotableItem;
+import store.dto.Receipt;
 import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
 import store.service.OutputService;
 import store.service.PromotionService;
+import store.service.PurchaseService;
 
 public class ConvenienceStoreController {
 
@@ -19,6 +21,7 @@ public class ConvenienceStoreController {
     private final InputService inputService;
     private final BasketService basketService;
     private final PromotionService promotionService;
+    private final PurchaseService purchaseService;
 
     public ConvenienceStoreController(ApplicationConfiguration configuration) {
         this.initialSettingService = configuration.getInitialSettingService();
@@ -26,6 +29,7 @@ public class ConvenienceStoreController {
         this.inputService = configuration.getInputService();
         this.basketService = configuration.getBasketService();
         this.promotionService = configuration.getPromotionService();
+        this.purchaseService = configuration.getPurchaseService();
         this.initialSettingService.initialize(
                 InitialSettingFileName.INITIAL_PRODUCT.getName(),
                 InitialSettingFileName.INITIAL_PROMOTION.getName());
@@ -39,6 +43,7 @@ public class ConvenienceStoreController {
         basketService.addBasketItems(basketItems);
         addAdditionalGiftItem();
         processNonPromotableItem();
+        Receipt receipt = purchaseService.purchase();
         boolean isMembershipDiscountAccept = inputService.inputMembershipDiscountAcceptance();
     }
 
