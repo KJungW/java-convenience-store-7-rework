@@ -12,6 +12,14 @@ public class PurchasedItem {
         this.quantity = quantity;
     }
 
+    public int calculateFullPrice() {
+        return price * quantity;
+    }
+
+    public PurchasedItem copy() {
+        return new PurchasedItem(productName, price, quantity);
+    }
+
     public String getProductName() {
         return productName;
     }

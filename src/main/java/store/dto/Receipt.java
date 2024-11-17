@@ -14,12 +14,20 @@ public class Receipt {
         this.membershipDiscount = 0;
     }
 
+    public void applyMembershipDiscount(int discountAmount) {
+        this.membershipDiscount = discountAmount;
+    }
+
     public List<PurchasedItem> getPurchasedItems() {
-        return purchasedItems;
+        return purchasedItems.stream()
+                .map(PurchasedItem::copy)
+                .toList();
     }
 
     public List<GiftedItem> getGiftedItems() {
-        return giftedItems;
+        return giftedItems.stream()
+                .map(GiftedItem::copy)
+                .toList();
     }
 
     public int getMembershipDiscount() {

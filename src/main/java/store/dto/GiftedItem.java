@@ -12,6 +12,14 @@ public class GiftedItem {
         this.quantity = quantity;
     }
 
+    public int calculateFullPrice() {
+        return price * quantity;
+    }
+
+    public GiftedItem copy() {
+        return new GiftedItem(productName, price, quantity);
+    }
+
     public String getProductName() {
         return productName;
     }
