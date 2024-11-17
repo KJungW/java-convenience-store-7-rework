@@ -7,6 +7,7 @@ import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
 import store.service.OutputService;
+import store.service.PromotionService;
 import store.view.InputView;
 import store.view.OutputView;
 
@@ -28,9 +29,10 @@ public class ApplicationConfiguration {
             = new OutputService(outputView, productRepository);
     private final InputService inputService
             = new InputService((inputView));
-
     private final BasketService basketService
             = new BasketService(basketItemRepository, productRepository);
+    private final PromotionService promotionService
+            = new PromotionService(basketItemRepository, productRepository, promotionRepository);
 
     public InitialSettingService getInitialSettingService() {
         return initialSettingService;
@@ -46,5 +48,9 @@ public class ApplicationConfiguration {
 
     public BasketService getBasketService() {
         return basketService;
+    }
+
+    public PromotionService getPromotionService() {
+        return promotionService;
     }
 }
