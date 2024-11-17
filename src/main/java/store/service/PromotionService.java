@@ -6,6 +6,7 @@ import store.domain.BasketItem;
 import store.domain.Product;
 import store.domain.Promotion;
 import store.dto.AdditionalGiftItem;
+import store.dto.NonPromotableItem;
 import store.repository.BasketItemRepository;
 import store.repository.ProductRepository;
 import store.repository.PromotionRepository;
@@ -37,6 +38,18 @@ public class PromotionService {
         return additionalGiftItems;
     }
 
+    public List<NonPromotableItem> findNonPromotableItem() {
+        List<BasketItem> allBasketItems = basketItemRepository.findAll();
+        List<NonPromotableItem> nonPromotableItems = new ArrayList<>();
+        for (BasketItem item : allBasketItems) {
+            int nonPromotableItemCount = calculateNonPromotableItemCount(item);
+            if (nonPromotableItemCount != 0) {
+                nonPromotableItems.add(new NonPromotableItem(item.getName(), nonPromotableItemCount));
+            }
+        }
+        return nonPromotableItems;
+    }
+
     private int calculateAdditionalGiftCount(BasketItem basketItem) {
         Product product = productRepository.find(basketItem.getName());
         if (!checkPromotionInProductIsAvailable(product)) {
@@ -48,6 +61,15 @@ public class PromotionService {
             return 0;
         }
         return additionalGiftCount;
+    }
+
+    private int calculateNonPromotableItemCount(BasketItem basketItem) {
+        Product product = productRepository.find(basketItem.getName());
+        if (!checkPromotionInProductIsAvailable(product)) {
+            return 0;
+        }
+        Promotion promotion = promotionRepository.find(product.getPromotionName());
+        return promotion.calculateNonPromotableItemCount(basketItem.getQuantity(), product.getPromotionQuantity());
     }
 
     private boolean checkPromotionInProductIsAvailable(Product product) {

@@ -33,6 +33,15 @@ public class Promotion {
         return 0;
     }
 
+    public int calculateNonPromotableItemCount(int quantity, int maximumPromotionQuantity) {
+        if (quantity <= maximumPromotionQuantity) {
+            return quantity % (purchaseCount + giftCount);
+        }
+        int excessQuantity = quantity - maximumPromotionQuantity;
+        int restQuantity = (quantity - excessQuantity) % (purchaseCount + giftCount);
+        return excessQuantity + restQuantity;
+    }
+
     public boolean isAvailable() {
         return startDate.isBefore(DateTimes.now()) && endDate.isAfter(DateTimes.now());
     }
