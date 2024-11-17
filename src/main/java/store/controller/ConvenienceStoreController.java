@@ -39,6 +39,7 @@ public class ConvenienceStoreController {
         basketService.addBasketItems(basketItems);
         addAdditionalGiftItem();
         processNonPromotableItem();
+        boolean isMembershipDiscountAccept = inputService.inputMembershipDiscountAcceptance();
     }
 
     private void addAdditionalGiftItem() {
