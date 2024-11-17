@@ -69,4 +69,41 @@ class BasketServiceTest {
                 .isThrownBy(() -> basketService.addBasketItems(basketItems))
                 .withMessage(ServiceExceptionMessage.NOT_EXIST_PRODUCT.getMessage());
     }
+
+    @DisplayName("기존 장바구니 아이템의 수량을 추가할 수 있다")
+    @Test
+    void 기존_장바구니_아이템의_수량을_추가할_수_있다() {
+        productRepository.add(new Product("콜라", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("콜라", 5));
+        basketService.addBasketItems(basketItems);
+
+        basketService.addBasketItemQuantity("콜라", 5);
+
+        BasketItem updatedBasketItem = basketItemRepository.find("콜라");
+        assertThat(updatedBasketItem.getQuantity()).isEqualTo(10);
+    }
+
+    @DisplayName("존재하지 않는 장바구니 아이템의 수량은 추가할 수 없다")
+    @Test
+    void 존재하지_않는_장바구니_아이템의_수량은_추가할_수_없다() {
+        productRepository.add(new Product("사이다", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("사이다", 5));
+        basketService.addBasketItems(basketItems);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> basketService.addBasketItemQuantity("콜라", 5))
+                .withMessage(ServiceExceptionMessage.NOT_EXIST_BASKET_ITEM.getMessage());
+    }
+
+    @DisplayName("상품의 재고가 부족하도록 장바구니 아이템의 수량을 추가할 수 없다")
+    @Test
+    void 상품의_재고가_부족하도록_장바구니_아이템의_수량을_추가할_수_없다() {
+        productRepository.add(new Product("콜라", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("콜라", 5));
+        basketService.addBasketItems(basketItems);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> basketService.addBasketItemQuantity("콜라", 6))
+                .withMessage(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
+    }
 }
