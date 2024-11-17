@@ -3,6 +3,7 @@ package store.configuration;
 import store.repository.BasketItemRepository;
 import store.repository.ProductRepository;
 import store.repository.PromotionRepository;
+import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
 import store.service.OutputService;
@@ -28,6 +29,9 @@ public class ApplicationConfiguration {
     private final InputService inputService
             = new InputService((inputView));
 
+    private final BasketService basketService
+            = new BasketService(basketItemRepository, productRepository);
+
     public InitialSettingService getInitialSettingService() {
         return initialSettingService;
     }
@@ -38,5 +42,9 @@ public class ApplicationConfiguration {
 
     public InputService getInputService() {
         return inputService;
+    }
+
+    public BasketService getBasketService() {
+        return basketService;
     }
 }

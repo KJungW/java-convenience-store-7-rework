@@ -4,6 +4,7 @@ import java.util.List;
 import store.configuration.ApplicationConfiguration;
 import store.constant.InitialSettingFileName;
 import store.domain.BasketItem;
+import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
 import store.service.OutputService;
@@ -13,11 +14,13 @@ public class ConvenienceStoreController {
     private final InitialSettingService initialSettingService;
     private final OutputService outputService;
     private final InputService inputService;
+    private final BasketService basketService;
 
     public ConvenienceStoreController(ApplicationConfiguration configuration) {
         this.initialSettingService = configuration.getInitialSettingService();
         this.outputService = configuration.getOutputService();
         this.inputService = configuration.getInputService();
+        this.basketService = configuration.getBasketService();
 
         this.initialSettingService.initialize(
                 InitialSettingFileName.INITIAL_PRODUCT.getName(),
@@ -29,5 +32,6 @@ public class ConvenienceStoreController {
         outputService.printProductGuideMessage();
         outputService.printProductsInStore();
         List<BasketItem> basketItems = inputService.inputBasketItems();
+        basketService.addBasketItem(basketItems);
     }
 }
