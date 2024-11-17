@@ -58,4 +58,15 @@ class BasketServiceTest {
                 .isThrownBy(() -> basketService.addBasketItems(basketItems))
                 .withMessage(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
     }
+
+    @DisplayName("상품이 존재하지 않으면 장바구니에 아이템을 추가할 수 없다")
+    @Test
+    void 상품이_존재하지_않으면_장바구니에_아이템을_추가할_수_없다() {
+        productRepository.add(new Product("사이다", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("콜라", 15));
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> basketService.addBasketItems(basketItems))
+                .withMessage(ServiceExceptionMessage.NOT_EXIST_PRODUCT.getMessage());
+    }
 }
