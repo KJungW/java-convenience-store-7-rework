@@ -6,6 +6,7 @@ import store.repository.PromotionRepository;
 import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
+import store.service.MembershipService;
 import store.service.OutputService;
 import store.service.PromotionService;
 import store.service.PurchaseService;
@@ -36,6 +37,8 @@ public class ApplicationConfiguration {
             = new PromotionService(basketItemRepository, productRepository, promotionRepository);
     private final PurchaseService purchaseService
             = new PurchaseService(basketItemRepository, productRepository, promotionRepository);
+    private final MembershipService membershipService
+            = new MembershipService();
 
     public InitialSettingService getInitialSettingService() {
         return initialSettingService;
@@ -59,5 +62,9 @@ public class ApplicationConfiguration {
 
     public PurchaseService getPurchaseService() {
         return purchaseService;
+    }
+
+    public MembershipService getMembershipService() {
+        return membershipService;
     }
 }

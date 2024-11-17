@@ -10,6 +10,7 @@ import store.dto.Receipt;
 import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
+import store.service.MembershipService;
 import store.service.OutputService;
 import store.service.PromotionService;
 import store.service.PurchaseService;
@@ -22,6 +23,7 @@ public class ConvenienceStoreController {
     private final BasketService basketService;
     private final PromotionService promotionService;
     private final PurchaseService purchaseService;
+    private final MembershipService membershipService;
 
     public ConvenienceStoreController(ApplicationConfiguration configuration) {
         this.initialSettingService = configuration.getInitialSettingService();
@@ -30,21 +32,26 @@ public class ConvenienceStoreController {
         this.basketService = configuration.getBasketService();
         this.promotionService = configuration.getPromotionService();
         this.purchaseService = configuration.getPurchaseService();
+        this.membershipService = configuration.getMembershipService();
         this.initialSettingService.initialize(
                 InitialSettingFileName.INITIAL_PRODUCT.getName(),
                 InitialSettingFileName.INITIAL_PROMOTION.getName());
     }
 
     public void run() {
-        outputService.printWelcomeGreeting();
-        outputService.printProductGuideMessage();
-        outputService.printProductsInStore();
+        printStartGuideMessage();
         List<BasketItem> basketItems = inputService.inputBasketItems();
         basketService.addBasketItems(basketItems);
         addAdditionalGiftItem();
         processNonPromotableItem();
         Receipt receipt = purchaseService.purchase();
-        boolean isMembershipDiscountAccept = inputService.inputMembershipDiscountAcceptance();
+        receipt = applyMembershipDiscount(receipt);
+    }
+
+    private void printStartGuideMessage() {
+        outputService.printWelcomeGreeting();
+        outputService.printProductGuideMessage();
+        outputService.printProductsInStore();
     }
 
     private void addAdditionalGiftItem() {
@@ -65,5 +72,13 @@ public class ConvenienceStoreController {
                 basketService.subtractBasketItemQuantity(item.getProductName(), item.getQuantity());
             }
         }
+    }
+
+    private Receipt applyMembershipDiscount(Receipt receipt) {
+        boolean isMembershipDiscountAccept = inputService.inputMembershipDiscountAcceptance();
+        if (isMembershipDiscountAccept) {
+            return membershipService.calculateMembershipDiscount(receipt);
+        }
+        return receipt;
     }
 }
