@@ -1,5 +1,7 @@
 package store.domain;
 
+import store.constant.exception_message.DomainExceptionMessage;
+
 public class Product {
 
     private static final int DEFAULT_QUANTITY = 0;
@@ -35,10 +37,6 @@ public class Product {
         this.promotionName = promotionName;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Product copy() {
         return new Product(name, price, commonQuantity, promotionQuantity, promotionName);
     }
@@ -51,8 +49,22 @@ public class Product {
         commonQuantity += quantity;
     }
 
+    public void subtractCommonQuantity(int quantity) {
+        if (commonQuantity - quantity < 0) {
+            throw new IllegalArgumentException(DomainExceptionMessage.QUANTITY_SUBTRACTION_IS_IMPOSSIBLE.getMessage());
+        }
+        commonQuantity -= quantity;
+    }
+
     public void addPromotionQuantity(int quantity) {
         promotionQuantity += quantity;
+    }
+
+    public void subtractPromotionQuantity(int quantity) {
+        if (promotionQuantity - quantity < 0) {
+            throw new IllegalArgumentException(DomainExceptionMessage.QUANTITY_SUBTRACTION_IS_IMPOSSIBLE.getMessage());
+        }
+        promotionQuantity -= quantity;
     }
 
     public boolean isEmptyQuantity() {
@@ -67,12 +79,16 @@ public class Product {
         return promotionQuantity >= quantity;
     }
 
-    public int getCommonQuantity() {
-        return commonQuantity;
+    public String getName() {
+        return name;
     }
 
     public int getPrice() {
         return price;
+    }
+
+    public int getCommonQuantity() {
+        return commonQuantity;
     }
 
     public int getPromotionQuantity() {

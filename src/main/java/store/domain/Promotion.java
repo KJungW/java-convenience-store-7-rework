@@ -42,6 +42,13 @@ public class Promotion {
         return excessQuantity + restQuantity;
     }
 
+    public int calculateGiftedItemCount(int quantity, int maximumPromotionQuantity) {
+        if (quantity <= maximumPromotionQuantity) {
+            return quantity / (purchaseCount + giftCount);
+        }
+        return maximumPromotionQuantity / (purchaseCount + giftCount);
+    }
+
     public boolean isAvailable() {
         return startDate.isBefore(DateTimes.now()) && endDate.isAfter(DateTimes.now());
     }
