@@ -5,6 +5,7 @@ import store.configuration.ApplicationConfiguration;
 import store.constant.InitialSettingFileName;
 import store.domain.BasketItem;
 import store.dto.AdditionalGiftItem;
+import store.dto.NonPromotableItem;
 import store.service.BasketService;
 import store.service.InitialSettingService;
 import store.service.InputService;
@@ -37,6 +38,7 @@ public class ConvenienceStoreController {
         List<BasketItem> basketItems = inputService.inputBasketItems();
         basketService.addBasketItems(basketItems);
         addAdditionalGiftItem();
+        processNonPromotableItem();
     }
 
     private void addAdditionalGiftItem() {
@@ -45,6 +47,16 @@ public class ConvenienceStoreController {
             boolean isAcceptance = inputService.inputAdditionalGiftItemAcceptance(item);
             if (isAcceptance) {
                 basketService.addBasketItemQuantity(item.getProductName(), item.getQuantity());
+            }
+        }
+    }
+
+    private void processNonPromotableItem() {
+        List<NonPromotableItem> nonPromotableItems = promotionService.findNonPromotableItem();
+        for (NonPromotableItem item : nonPromotableItems) {
+            boolean isAcceptance = inputService.inputNonPromotableItemAcceptance(item);
+            if (!isAcceptance) {
+                basketService.subtractBasketItemQuantity(item.getProductName(), item.getQuantity());
             }
         }
     }
