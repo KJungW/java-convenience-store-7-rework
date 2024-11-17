@@ -106,4 +106,41 @@ class BasketServiceTest {
                 .isThrownBy(() -> basketService.addBasketItemQuantity("콜라", 6))
                 .withMessage(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
     }
+
+    @DisplayName("기존 장바구니 아이템의 수량을 차감할 수 있다")
+    @Test
+    void 기존_장바구니_아이템의_수량을_차감할_수_있다() {
+        productRepository.add(new Product("콜라", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("콜라", 8));
+        basketService.addBasketItems(basketItems);
+
+        basketService.subtractBasketItemQuantity("콜라", 5);
+
+        BasketItem updatedBasketItem = basketItemRepository.find("콜라");
+        assertThat(updatedBasketItem.getQuantity()).isEqualTo(3);
+    }
+
+    @DisplayName("기존의 수량이 음수가 되도록 장바구니 아이템의 수량을 차감할 수 없다")
+    @Test
+    void 기존의_수량이_음수가_되도록_장바구니_아이템의_수량을_차감할_수_없다() {
+        productRepository.add(new Product("콜라", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("콜라", 5));
+        basketService.addBasketItems(basketItems);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> basketService.subtractBasketItemQuantity("콜라", 8))
+                .withMessage(ServiceExceptionMessage.IMPOSSIBLE_QUANTITY_SUBTRACTION.getMessage());
+    }
+
+    @DisplayName("장바구니 아이템의 수량을 모두 차감하면 장바구니에서 해당 아이템이 제거된다")
+    @Test
+    void 장바구니_아이템의_수량을_모두_차감하면_장바구니에서_해당_아이템이_제거된다() {
+        productRepository.add(new Product("콜라", 3000, 10, "탄산2+1"));
+        List<BasketItem> basketItems = List.of(new BasketItem("콜라", 5));
+        basketService.addBasketItems(basketItems);
+
+        basketService.subtractBasketItemQuantity("콜라", 5);
+
+        assertThat(basketItemRepository.checkExistence("콜라")).isFalse();
+    }
 }
