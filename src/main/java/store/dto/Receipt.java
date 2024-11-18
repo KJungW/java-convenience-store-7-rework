@@ -18,6 +18,20 @@ public class Receipt {
         this.membershipDiscount = discountAmount;
     }
 
+    public int calculatePurchasePrice() {
+        return purchasedItems.stream().mapToInt(PurchasedItem::calculateFullPrice).sum();
+    }
+
+    public int calculateGiftPrice() {
+        return giftedItems.stream().mapToInt(GiftedItem::calculateFullPrice).sum();
+    }
+
+    public int calculatePriceToPay() {
+        int purchasePrice = calculatePurchasePrice();
+        int giftPrice = calculateGiftPrice();
+        return purchasePrice - giftPrice - membershipDiscount;
+    }
+
     public List<PurchasedItem> getPurchasedItems() {
         return purchasedItems.stream()
                 .map(PurchasedItem::copy)

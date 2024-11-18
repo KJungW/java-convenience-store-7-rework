@@ -1,7 +1,11 @@
 package store.service;
 
 import java.util.List;
+import store.constant.input_output_message.OutputMessage;
 import store.domain.Product;
+import store.dto.GiftedItem;
+import store.dto.PurchasedItem;
+import store.dto.Receipt;
 import store.repository.ProductRepository;
 import store.view.OutputView;
 
@@ -56,5 +60,62 @@ public class OutputService {
             return "재고 없음";
         }
         return quantity + "개";
+    }
+
+    public void printReceipt(Receipt receipt) {
+        outputView.printContent(OutputMessage.RECEIPT_START.getMessage());
+        printPurchaseInformationInReceipt(receipt.getPurchasedItems());
+        printGiftInformationInReceipt(receipt.getGiftedItems());
+        printPriceInformationInReceipt(receipt);
+    }
+
+    private void printPurchaseInformationInReceipt(List<PurchasedItem> items) {
+        outputView.printContent(OutputMessage.RECEIPT_PURCHASE_HEADER.getMessage());
+        for (PurchasedItem item : items) {
+            String content = String.format(OutputMessage.RECEIPT_PURCHASE_CONTENT.getMessage(),
+                    item.getProductName(), item.getQuantity(), item.getPrice());
+            outputView.printContent(content);
+        }
+    }
+
+    private void printGiftInformationInReceipt(List<GiftedItem> items) {
+        outputView.printContent(OutputMessage.RECEIPT_GIFT_START.getMessage());
+        for (GiftedItem item : items) {
+            String content = String.format(OutputMessage.RECEIPT_GIFT_CONTENT.getMessage(),
+                    item.getProductName(), item.getQuantity(), item.getPrice());
+            outputView.printContent(content);
+        }
+    }
+
+    private void printPriceInformationInReceipt(Receipt receipt) {
+        outputView.printContent(OutputMessage.RECEIPT_PRICE_START.getMessage());
+        printPurchasePrice(receipt);
+        printGiftPrice(receipt);
+        printMembershipDiscount(receipt);
+        printPriceToPay(receipt);
+    }
+
+    private void printPurchasePrice(Receipt receipt) {
+        String purchasePriceContent = String.format(OutputMessage.RECEIPT_PURCHASE_PRICE.getMessage(),
+                receipt.calculatePurchasePrice());
+        outputView.printContent(purchasePriceContent);
+    }
+
+    private void printGiftPrice(Receipt receipt) {
+        String giftPriceContent = String.format(OutputMessage.RECEIPT_GIFT_PRICE.getMessage(),
+                receipt.calculateGiftPrice());
+        outputView.printContent(giftPriceContent);
+    }
+
+    private void printMembershipDiscount(Receipt receipt) {
+        String membershipDiscountContent = String.format(OutputMessage.RECEIPT_MEMBERSHIP_DISCOUNT.getMessage(),
+                receipt.getMembershipDiscount());
+        outputView.printContent(membershipDiscountContent);
+    }
+
+    private void printPriceToPay(Receipt receipt) {
+        String priceToPayContent = String.format(OutputMessage.RECEIPT_PRICE_TO_PAY.getMessage(),
+                receipt.calculatePriceToPay());
+        outputView.printContent(priceToPayContent);
     }
 }
