@@ -73,7 +73,10 @@ public class PromotionService {
     }
 
     private boolean checkPromotionInProductIsAvailable(Product product) {
+        if (!product.checkIsPromoted()) {
+            return false;
+        }
         Promotion promotion = promotionRepository.find(product.getPromotionName());
-        return product.checkIsPromoted() && promotion.isAvailable();
+        return promotion.isAvailable();
     }
 }
