@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import store.constant.DefaultValue;
 import store.constant.exception_message.ServiceExceptionMessage;
 import store.constant.input.InputSeparator;
 import store.constant.parsing.DateParsingFormat;
@@ -20,7 +21,6 @@ import store.utility.FileUtility;
 
 public class InitialSettingService {
 
-    private static final int DEFAULT_TIME_VALUE = 0;
     private static final String NULL_PROMOTION_NAME_IN_FILE = "null";
 
     private final ProductRepository productRepository;
@@ -63,7 +63,8 @@ public class InitialSettingService {
         int year = Integer.parseInt(dateParts.get(DateParsingFormat.YEAR.getIndex()));
         int month = Integer.parseInt(dateParts.get(DateParsingFormat.MONTH.getIndex()));
         int day = Integer.parseInt(dateParts.get(DateParsingFormat.DAY.getIndex()));
-        return LocalDateTime.of(year, month, day, DEFAULT_TIME_VALUE, DEFAULT_TIME_VALUE, DEFAULT_TIME_VALUE);
+        return LocalDateTime.of(year, month, day,
+                DefaultValue.ZERO_TIME_VALUE, DefaultValue.ZERO_TIME_VALUE, DefaultValue.ZERO_TIME_VALUE);
     }
 
     private Set<Product> getInitialProductByFile(String fileName) {

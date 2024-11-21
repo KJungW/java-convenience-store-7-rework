@@ -1,6 +1,7 @@
 package store.service;
 
 import java.util.List;
+import store.constant.DefaultValue;
 import store.constant.input.InputRegularExpression;
 import store.constant.input.InputRounder;
 import store.constant.input.InputSeparator;
@@ -16,7 +17,6 @@ import store.view.OutputView;
 
 public class InputService {
 
-    private static final String EMPTY_TEXT = "";
     private final InputView inputView;
     private final OutputView outputView;
     private final BasketService basketService;
@@ -141,8 +141,8 @@ public class InputService {
     }
 
     private BasketItem parseBasketItem(String input) {
-        input = input.replace(InputRounder.SQUARE_BRACKETS_LEFT.getContent(), EMPTY_TEXT);
-        input = input.replace(InputRounder.SQUARE_BRACKETS_RIGHT.getContent(), EMPTY_TEXT);
+        input = input.replace(InputRounder.SQUARE_BRACKETS_LEFT.getContent(), DefaultValue.EMPTY_TEXT);
+        input = input.replace(InputRounder.SQUARE_BRACKETS_RIGHT.getContent(), DefaultValue.EMPTY_TEXT);
         List<String> basketItemParts = List.of(input.split(InputSeparator.HYPHEN.getContent()));
         String name = basketItemParts.get(BasketItemsParsingFormat.NAME.getIndex());
         int quantity = Integer.parseInt(basketItemParts.get(BasketItemsParsingFormat.QUANTITY.getIndex()));

@@ -2,6 +2,7 @@ package store.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import store.constant.DefaultValue;
 import store.domain.BasketItem;
 import store.domain.Product;
 import store.domain.Promotion;
@@ -31,7 +32,7 @@ public class PromotionService {
         List<AdditionalGiftItem> additionalGiftItems = new ArrayList<>();
         for (BasketItem item : allBasketItems) {
             int additionalGiftCount = calculateAdditionalGiftCount(item);
-            if (additionalGiftCount != 0) {
+            if (additionalGiftCount != DefaultValue.MINIMUM_QUANTITY) {
                 additionalGiftItems.add(new AdditionalGiftItem(item.getName(), additionalGiftCount));
             }
         }
@@ -43,7 +44,7 @@ public class PromotionService {
         List<NonPromotableItem> nonPromotableItems = new ArrayList<>();
         for (BasketItem item : allBasketItems) {
             int nonPromotableItemCount = calculateNonPromotableItemCount(item);
-            if (nonPromotableItemCount != 0) {
+            if (nonPromotableItemCount != DefaultValue.MINIMUM_QUANTITY) {
                 nonPromotableItems.add(new NonPromotableItem(item.getName(), nonPromotableItemCount));
             }
         }
@@ -53,12 +54,12 @@ public class PromotionService {
     private int calculateAdditionalGiftCount(BasketItem basketItem) {
         Product product = productRepository.find(basketItem.getName());
         if (!checkPromotionInProductIsAvailable(product)) {
-            return 0;
+            return DefaultValue.MINIMUM_QUANTITY;
         }
         Promotion promotion = promotionRepository.find(product.getPromotionName());
         int additionalGiftCount = promotion.calculateAdditionalGiftCount(basketItem.getQuantity());
         if (!product.isEnoughPromotionQuantity(basketItem.getQuantity() + additionalGiftCount)) {
-            return 0;
+            return DefaultValue.MINIMUM_QUANTITY;
         }
         return additionalGiftCount;
     }
@@ -66,7 +67,7 @@ public class PromotionService {
     private int calculateNonPromotableItemCount(BasketItem basketItem) {
         Product product = productRepository.find(basketItem.getName());
         if (!checkPromotionInProductIsAvailable(product)) {
-            return 0;
+            return DefaultValue.MINIMUM_QUANTITY;
         }
         Promotion promotion = promotionRepository.find(product.getPromotionName());
         return promotion.calculateNonPromotableItemCount(basketItem.getQuantity(), product.getPromotionQuantity());

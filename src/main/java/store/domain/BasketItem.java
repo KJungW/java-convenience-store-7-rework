@@ -1,5 +1,6 @@
 package store.domain;
 
+import store.constant.DefaultValue;
 import store.constant.exception_message.DomainExceptionMessage;
 
 public class BasketItem {
@@ -21,7 +22,7 @@ public class BasketItem {
     }
 
     public boolean checkQuantitySubtractionIsPossible(int quantity) {
-        return (this.quantity - quantity) >= 0;
+        return (this.quantity - quantity) >= DefaultValue.MINIMUM_QUANTITY;
     }
 
     private void validateSubtractQuantityIsPossible(int quantity) {

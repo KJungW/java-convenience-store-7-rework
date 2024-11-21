@@ -2,6 +2,7 @@ package store.domain;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDateTime;
+import store.constant.DefaultValue;
 import store.constant.exception_message.DomainExceptionMessage;
 
 public class Promotion {
@@ -34,7 +35,7 @@ public class Promotion {
         if (restQuantity == purchaseCount) {
             return giftCount;
         }
-        return 0;
+        return DefaultValue.MINIMUM_QUANTITY;
     }
 
     public int calculateNonPromotableItemCount(int quantity, int maximumPromotionQuantity) {

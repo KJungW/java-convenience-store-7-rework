@@ -1,5 +1,6 @@
 package store.domain;
 
+import store.constant.DefaultValue;
 import store.constant.exception_message.DomainExceptionMessage;
 
 public class Product {
@@ -50,7 +51,7 @@ public class Product {
     }
 
     public void subtractCommonQuantity(int quantity) {
-        if (commonQuantity - quantity < 0) {
+        if (commonQuantity - quantity < DefaultValue.MINIMUM_QUANTITY) {
             throw new IllegalArgumentException(DomainExceptionMessage.QUANTITY_SUBTRACTION_IS_IMPOSSIBLE.getMessage());
         }
         commonQuantity -= quantity;
@@ -61,7 +62,7 @@ public class Product {
     }
 
     public void subtractPromotionQuantity(int quantity) {
-        if (promotionQuantity - quantity < 0) {
+        if (promotionQuantity - quantity < DefaultValue.MINIMUM_QUANTITY) {
             throw new IllegalArgumentException(DomainExceptionMessage.QUANTITY_SUBTRACTION_IS_IMPOSSIBLE.getMessage());
         }
         promotionQuantity -= quantity;
