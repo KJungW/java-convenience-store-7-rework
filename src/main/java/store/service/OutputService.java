@@ -41,11 +41,6 @@ public class OutputService {
         outputView.printBlankLine();
     }
 
-    public void printErrorMessage(String message) {
-        String content = OutputMessage.ERROR_MESSAGE_PREFIX + message;
-        outputView.printContent(content);
-    }
-
     private void printCommonProduct(Product product) {
         String quantityContent = makeQuantityContent(product.getCommonQuantity());
         String content = String.format("- %s %,d원 %s",

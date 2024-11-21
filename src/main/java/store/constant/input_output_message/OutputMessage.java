@@ -11,7 +11,7 @@ public enum OutputMessage {
     RECEIPT_GIFT_PRICE("행사할인\t\t\t\t\t\t\t\t\t-%,d"),
     RECEIPT_MEMBERSHIP_DISCOUNT("멤버십할인\t\t\t\t\t\t\t\t-%,d"),
     RECEIPT_PRICE_TO_PAY("내실돈\t\t\t\t\t\t\t\t\t\t%,d"),
-    ERROR_MESSAGE_PREFIX("[Error] ");
+    ERROR_MESSAGE_PREFIX("[ERROR] ");
 
     private final String message;
 

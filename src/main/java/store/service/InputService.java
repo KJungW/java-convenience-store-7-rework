@@ -30,9 +30,9 @@ public class InputService {
             try {
                 return tryInputBasketItems();
             } catch (InputException exception) {
-                outputView.printContent(exception.getMessage());
+                outputView.printError(exception.getMessage());
             } catch (IllegalArgumentException exception) {
-                outputView.printContent(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
+                outputView.printError(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
             }
         }
     }
@@ -42,9 +42,9 @@ public class InputService {
             try {
                 return tryInputAdditionalGiftItemAcceptance(giftItem);
             } catch (InputException exception) {
-                outputView.printContent(exception.getMessage());
+                outputView.printError(exception.getMessage());
             } catch (IllegalArgumentException exception) {
-                outputView.printContent(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
+                outputView.printError(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
             }
         }
     }
@@ -54,9 +54,9 @@ public class InputService {
             try {
                 return tryInputNonPromotableItemAcceptance(promotableItem);
             } catch (InputException exception) {
-                outputView.printContent(exception.getMessage());
+                outputView.printError(exception.getMessage());
             } catch (IllegalArgumentException exception) {
-                outputView.printContent(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
+                outputView.printError(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
             }
         }
     }
@@ -66,9 +66,9 @@ public class InputService {
             try {
                 return tryInputMembershipDiscountAcceptance();
             } catch (InputException exception) {
-                outputView.printContent(exception.getMessage());
+                outputView.printError(exception.getMessage());
             } catch (IllegalArgumentException exception) {
-                outputView.printContent(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
+                outputView.printError(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
             }
         }
     }
@@ -78,9 +78,9 @@ public class InputService {
             try {
                 return tryInputShoppingContinuation();
             } catch (InputException exception) {
-                outputView.printContent(exception.getMessage());
+                outputView.printError(exception.getMessage());
             } catch (IllegalArgumentException exception) {
-                outputView.printContent(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
+                outputView.printError(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
             }
         }
     }
