@@ -2,6 +2,7 @@ package store.domain;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDateTime;
+import store.constant.exception_message.DomainExceptionMessage;
 
 public class Promotion {
 
@@ -18,6 +19,9 @@ public class Promotion {
             LocalDateTime startDate,
             LocalDateTime endDate
     ) {
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException(DomainExceptionMessage.PROMOTION_PERIOD_IS_INVALID.getMessage());
+        }
         this.name = name;
         this.purchaseCount = purchaseCount;
         this.giftCount = giftCount;
