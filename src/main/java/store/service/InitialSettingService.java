@@ -96,7 +96,7 @@ public class InitialSettingService {
 
     private Product compositeProduct(Product originProduct, Product newProduct) {
         if (!originProduct.getName().equals(newProduct.getName())) {
-            throw new IllegalArgumentException(ServiceExceptionMessage.NOT_SAME_PRODUCT.getMessage());
+            throw new IllegalArgumentException(ServiceExceptionMessage.PRODUCT_DOES_NOT_SAME.getMessage());
         }
         if (newProduct.checkIsPromoted()) {
             newProduct.addCommonQuantity(originProduct.getCommonQuantity());
@@ -115,7 +115,7 @@ public class InitialSettingService {
                 .map(Promotion::getName)
                 .collect(Collectors.toSet());
         if (!promotionNames.containsAll(promotionNamesInProduct)) {
-            throw new IllegalArgumentException(ServiceExceptionMessage.INVALID_PROMOTIONS_IN_PRODUCT.getMessage());
+            throw new IllegalArgumentException(ServiceExceptionMessage.PROMOTION_IN_PRODUCT_IS_INVALID.getMessage());
         }
     }
 }

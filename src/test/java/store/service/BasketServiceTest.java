@@ -62,7 +62,7 @@ class BasketServiceTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> basketService.addBasketItems(basketItems))
-                .withMessage(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
+                .withMessage(ServiceExceptionMessage.PRODUCT_QUANTITY_IS_NOT_ENOUGH.getMessage());
     }
 
     @DisplayName("상품이 존재하지 않으면 장바구니에 아이템을 추가할 수 없다")
@@ -74,7 +74,7 @@ class BasketServiceTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> basketService.addBasketItems(basketItems))
-                .withMessage(ServiceExceptionMessage.NOT_EXIST_PRODUCT.getMessage());
+                .withMessage(ServiceExceptionMessage.PRODUCT_DOES_NOT_EXIST.getMessage());
     }
 
     @DisplayName("기존 장바구니 아이템의 수량을 추가할 수 있다")
@@ -101,7 +101,7 @@ class BasketServiceTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> basketService.addBasketItemQuantity("콜라", 5))
-                .withMessage(ServiceExceptionMessage.NOT_EXIST_BASKET_ITEM.getMessage());
+                .withMessage(ServiceExceptionMessage.BASKET_ITEM_DOES_NOT_EXIST.getMessage());
     }
 
     @DisplayName("상품의 재고가 부족하도록 장바구니 아이템의 수량을 추가할 수 없다")
@@ -114,7 +114,7 @@ class BasketServiceTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> basketService.addBasketItemQuantity("콜라", 6))
-                .withMessage(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
+                .withMessage(ServiceExceptionMessage.PRODUCT_QUANTITY_IS_NOT_ENOUGH.getMessage());
     }
 
     @DisplayName("기존 장바구니 아이템의 수량을 차감할 수 있다")
@@ -141,7 +141,7 @@ class BasketServiceTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> basketService.subtractBasketItemQuantity("콜라", 8))
-                .withMessage(ServiceExceptionMessage.IMPOSSIBLE_QUANTITY_SUBTRACTION.getMessage());
+                .withMessage(ServiceExceptionMessage.NEGATIVE_QUANTITY_IS_NOT_ALLOWED.getMessage());
     }
 
     @DisplayName("장바구니 아이템의 수량을 모두 차감하면 장바구니에서 해당 아이템이 제거된다")

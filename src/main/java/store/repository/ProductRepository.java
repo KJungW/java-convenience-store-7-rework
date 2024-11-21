@@ -44,7 +44,7 @@ public class ProductRepository {
 
     private void validateExistence(String productName) {
         if (!checkExistence(productName)) {
-            throw new IllegalArgumentException(RepositoryExceptionMessage.DATA_NOT_EXIST.getMessage());
+            throw new IllegalArgumentException(RepositoryExceptionMessage.DATA_DOES_NOT_EXIST.getMessage());
         }
     }
 }

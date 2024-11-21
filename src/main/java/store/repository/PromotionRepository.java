@@ -44,7 +44,7 @@ public class PromotionRepository {
 
     private void validateExistence(String promotionName) {
         if (!checkExistence(promotionName)) {
-            throw new IllegalArgumentException(RepositoryExceptionMessage.DATA_NOT_EXIST.getMessage());
+            throw new IllegalArgumentException(RepositoryExceptionMessage.DATA_DOES_NOT_EXIST.getMessage());
         }
     }
 }

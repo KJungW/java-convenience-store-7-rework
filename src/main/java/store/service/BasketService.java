@@ -65,19 +65,19 @@ public class BasketService {
 
     private void validateEnoughQuantityForBasketItem(BasketItem basketItem) {
         if (!checkEnoughQuantityForBasketItem(basketItem)) {
-            throw new IllegalArgumentException(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
+            throw new IllegalArgumentException(ServiceExceptionMessage.PRODUCT_QUANTITY_IS_NOT_ENOUGH.getMessage());
         }
     }
 
     private void validateProductExistenceForBasketItem(BasketItem basketItem) {
         if (!checkProductExistenceForBasketItem(basketItem)) {
-            throw new IllegalArgumentException(ServiceExceptionMessage.NOT_EXIST_PRODUCT.getMessage());
+            throw new IllegalArgumentException(ServiceExceptionMessage.PRODUCT_DOES_NOT_EXIST.getMessage());
         }
     }
 
     private void validateBasketItemExistence(String productName) {
         if (!checkBasketItemExistence(productName)) {
-            throw new IllegalArgumentException(ServiceExceptionMessage.NOT_EXIST_BASKET_ITEM.getMessage());
+            throw new IllegalArgumentException(ServiceExceptionMessage.BASKET_ITEM_DOES_NOT_EXIST.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class BasketService {
 
     private void validateQuantitySubtractionIsPossible(BasketItem basketItem, int quantity) {
         if (!checkQuantitySubtractionIsPossible(basketItem, quantity)) {
-            throw new IllegalArgumentException(ServiceExceptionMessage.IMPOSSIBLE_QUANTITY_SUBTRACTION.getMessage());
+            throw new IllegalArgumentException(ServiceExceptionMessage.NEGATIVE_QUANTITY_IS_NOT_ALLOWED.getMessage());
         }
     }
 

@@ -53,7 +53,7 @@ public class BasketItemRepository {
 
     private void validateExistence(String basketItemName) {
         if (!checkExistence(basketItemName)) {
-            throw new IllegalArgumentException(RepositoryExceptionMessage.DATA_NOT_EXIST.getMessage());
+            throw new IllegalArgumentException(RepositoryExceptionMessage.DATA_DOES_NOT_EXIST.getMessage());
         }
     }
 }
