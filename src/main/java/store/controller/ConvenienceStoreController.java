@@ -39,20 +39,34 @@ public class ConvenienceStoreController {
     }
 
     public void run() {
-        printStartGuideMessage();
-        List<BasketItem> basketItems = inputService.inputBasketItems();
-        basketService.addBasketItems(basketItems);
-        addAdditionalGiftItem();
-        processNonPromotableItem();
-        Receipt receipt = purchaseService.purchase();
-        receipt = applyMembershipDiscount(receipt);
-        outputService.printReceipt(receipt);
+        while (true) {
+            printStartGuideMessage();
+            inputBasketItems();
+            purchase();
+            if (inputShoppingContinuation()) {
+                continue;
+            }
+            return;
+        }
     }
 
     private void printStartGuideMessage() {
         outputService.printWelcomeGreeting();
         outputService.printProductGuideMessage();
         outputService.printProductsInStore();
+    }
+
+    private void inputBasketItems() {
+        List<BasketItem> basketItems = inputService.inputBasketItems();
+        basketService.addBasketItems(basketItems);
+    }
+
+    private void purchase() {
+        addAdditionalGiftItem();
+        processNonPromotableItem();
+        Receipt receipt = purchaseService.purchase();
+        receipt = applyMembershipDiscount(receipt);
+        outputService.printReceipt(receipt);
     }
 
     private void addAdditionalGiftItem() {
@@ -81,5 +95,9 @@ public class ConvenienceStoreController {
             return membershipService.calculateMembershipDiscount(receipt);
         }
         return receipt;
+    }
+
+    private boolean inputShoppingContinuation() {
+        return inputService.inputShoppingContinuation();
     }
 }

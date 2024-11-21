@@ -30,4 +30,9 @@ public class InputView {
         System.out.println(InputGuideMessage.MEMBERSHIP_DISCOUNT_ACCEPTANCE_INPUT.getMessage());
         return Console.readLine();
     }
+
+    public String inputShoppingContinuation() {
+        System.out.println(InputGuideMessage.SHOPPING_CONTINUATION_INPUT.getMessage());
+        return Console.readLine();
+    }
 }

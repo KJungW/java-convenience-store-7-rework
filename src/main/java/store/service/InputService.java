@@ -73,6 +73,18 @@ public class InputService {
         }
     }
 
+    public boolean inputShoppingContinuation() {
+        while (true) {
+            try {
+                return tryInputShoppingContinuation();
+            } catch (InputException exception) {
+                outputView.printContent(exception.getMessage());
+            } catch (IllegalArgumentException exception) {
+                outputView.printContent(InputExceptionMessage.INPUT_IS_INVALID.getMessage());
+            }
+        }
+    }
+
     private List<BasketItem> tryInputBasketItems() {
         String rawInput = inputView.inputBasketItems();
         validateRawInputBasketItems(rawInput);
@@ -95,6 +107,12 @@ public class InputService {
 
     private boolean tryInputMembershipDiscountAcceptance() {
         String rawInput = inputView.inputMembershipDiscountAcceptance();
+        validateYesOrNo(rawInput);
+        return parseYesOrNo(rawInput);
+    }
+
+    private boolean tryInputShoppingContinuation() {
+        String rawInput = inputView.inputShoppingContinuation();
         validateYesOrNo(rawInput);
         return parseYesOrNo(rawInput);
     }
