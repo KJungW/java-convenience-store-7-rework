@@ -16,5 +16,4 @@ public class PromotionGenerator {
         LocalDateTime endDate = LocalDateTime.now().minusDays(3);
         return new Promotion(name, purchaseQuantity, giftQuantity, startDate, endDate);
     }
-
 }

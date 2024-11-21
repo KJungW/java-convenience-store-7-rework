@@ -75,6 +75,4 @@ class InitialSettingServiceTest {
                 .usingRecursiveComparison()
                 .isEqualTo(new Product("콜라", 1000, 10, 10, "탄산2+1"));
     }
-
-
 }

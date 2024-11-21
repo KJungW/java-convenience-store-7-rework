@@ -41,5 +41,4 @@ class PromotionTest {
 
         assertThat(actualGiftCount).isEqualTo(expectedGiftCount);
     }
-
 }

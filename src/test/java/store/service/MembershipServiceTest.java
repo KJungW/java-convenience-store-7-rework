@@ -52,5 +52,4 @@ class MembershipServiceTest {
 
         assertThat(resultReceipt.getMembershipDiscount()).isEqualTo(MAXIMUM_DISCOUNT_AMOUNT);
     }
-
 }

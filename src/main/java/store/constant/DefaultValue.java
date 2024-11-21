@@ -6,5 +6,4 @@ public class DefaultValue {
     public static final int ZERO_TIME_VALUE = 0;
     public static final String EMPTY_TEXT = "";
     public static final String SPACE_TEXT = " ";
-
 }
