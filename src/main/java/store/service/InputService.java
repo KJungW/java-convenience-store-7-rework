@@ -1,6 +1,8 @@
 package store.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import store.constant.DefaultValue;
 import store.constant.input.InputRegularExpression;
 import store.constant.input.InputRounder;
@@ -91,6 +93,7 @@ public class InputService {
         String rawInput = inputView.inputBasketItems();
         validateRawInputBasketItems(rawInput);
         List<BasketItem> basketItems = parseBasketItems(rawInput);
+        basketItems = removeDuplicateBasketItem(basketItems);
         validateInputBasketItems(basketItems);
         return basketItems;
     }
@@ -158,5 +161,18 @@ public class InputService {
 
     private boolean parseYesOrNo(String input) {
         return YesOrNo.valueOf(input).getContent();
+    }
+
+    private List<BasketItem> removeDuplicateBasketItem(List<BasketItem> basketItems) {
+        Map<String, BasketItem> result = new HashMap<>();
+        for (BasketItem item : basketItems) {
+            if (result.containsKey(item.getName())) {
+                BasketItem originBasketItem = result.get(item.getName());
+                originBasketItem.addQuantity(item.getQuantity());
+                continue;
+            }
+            result.put(item.getName(), item);
+        }
+        return result.values().stream().toList();
     }
 }
