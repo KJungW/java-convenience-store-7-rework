@@ -97,7 +97,7 @@ public class OutputService {
 
     private void printPurchasePrice(Receipt receipt) {
         String purchasePriceContent = String.format(OutputMessage.RECEIPT_PURCHASE_PRICE.getMessage(),
-                receipt.calculatePurchasePrice());
+                receipt.calculatePurchasePrice(), receipt.calculatePurchasedProductQuantity());
         outputView.printContent(purchasePriceContent);
     }
 

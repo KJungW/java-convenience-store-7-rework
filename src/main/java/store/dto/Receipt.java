@@ -32,6 +32,10 @@ public class Receipt {
         return purchasePrice - giftPrice - membershipDiscount;
     }
 
+    public int calculatePurchasedProductQuantity() {
+        return purchasedItems.stream().mapToInt(PurchasedItem::getQuantity).sum();
+    }
+
     public List<PurchasedItem> getPurchasedItems() {
         return purchasedItems.stream()
                 .map(PurchasedItem::copy)
