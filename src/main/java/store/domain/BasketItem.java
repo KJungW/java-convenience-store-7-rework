@@ -1,6 +1,7 @@
 package store.domain;
 
 import store.constant.DefaultValue;
+import store.constant.exception_message.DomainExceptionMessage;
 
 public class BasketItem {
 
@@ -17,6 +18,9 @@ public class BasketItem {
     }
 
     public void subtractQuantity(int quantity) {
+        if (!checkQuantitySubtractionIsPossible(quantity)) {
+            throw new IllegalArgumentException(DomainExceptionMessage.QUANTITY_SUBTRACTION_IS_IMPOSSIBLE.getMessage());
+        }
         this.quantity -= quantity;
     }
 
