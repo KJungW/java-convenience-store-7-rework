@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import store.constant.Separator;
 import store.constant.exception_message.ServiceExceptionMessage;
+import store.constant.input.InputSeparator;
 import store.domain.Product;
 import store.domain.Promotion;
 import store.repository.ProductRepository;
@@ -46,7 +46,7 @@ public class InitialSettingService {
     }
 
     private Promotion parsePromotion(String rawPromotion) {
-        List<String> promotionParts = List.of(rawPromotion.split(Separator.COMMA.getContent()));
+        List<String> promotionParts = List.of(rawPromotion.split(InputSeparator.COMMA.getContent()));
         String name = promotionParts.get(0);
         int purchaseCount = Integer.parseInt(promotionParts.get(1));
         int giftCount = Integer.parseInt(promotionParts.get(2));
@@ -56,7 +56,7 @@ public class InitialSettingService {
     }
 
     private LocalDateTime parseDate(String rawDate) {
-        List<String> dateParts = List.of(rawDate.split(Separator.HYPHEN.getContent()));
+        List<String> dateParts = List.of(rawDate.split(InputSeparator.HYPHEN.getContent()));
         int year = Integer.parseInt(dateParts.get(0));
         int month = Integer.parseInt(dateParts.get(1));
         int day = Integer.parseInt(dateParts.get(2));
@@ -83,7 +83,7 @@ public class InitialSettingService {
     }
 
     private Product parseProduct(String rawProduct) {
-        List<String> promotionParts = List.of(rawProduct.split(Separator.COMMA.getContent()));
+        List<String> promotionParts = List.of(rawProduct.split(InputSeparator.COMMA.getContent()));
         String name = promotionParts.get(0);
         int price = Integer.parseInt(promotionParts.get(1));
         int quantity = Integer.parseInt(promotionParts.get(2));

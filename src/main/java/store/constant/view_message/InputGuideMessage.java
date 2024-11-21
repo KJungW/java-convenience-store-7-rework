@@ -1,4 +1,4 @@
-package store.constant.input_output_message;
+package store.constant.view_message;
 
 public enum InputGuideMessage {
     BASKET_ITEMS_INPUT("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])"),

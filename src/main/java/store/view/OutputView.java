@@ -1,6 +1,6 @@
 package store.view;
 
-import store.constant.input_output_message.OutputMessage;
+import store.constant.view_message.OutputMessage;
 
 public class OutputView {
 

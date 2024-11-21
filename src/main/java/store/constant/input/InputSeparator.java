@@ -1,12 +1,12 @@
-package store.constant;
+package store.constant.input;
 
-public enum Separator {
+public enum InputSeparator {
     COMMA(","),
     HYPHEN("-");
 
     private String content;
 
-    Separator(String content) {
+    InputSeparator(String content) {
         this.content = content;
     }
 

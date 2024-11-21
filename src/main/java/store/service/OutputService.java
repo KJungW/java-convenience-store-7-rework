@@ -1,7 +1,7 @@
 package store.service;
 
 import java.util.List;
-import store.constant.input_output_message.OutputMessage;
+import store.constant.view_message.OutputMessage;
 import store.domain.Product;
 import store.dto.GiftedItem;
 import store.dto.PurchasedItem;

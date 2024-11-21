@@ -1,4 +1,4 @@
-package store.constant.input_output_message;
+package store.constant.view_message;
 
 public enum OutputMessage {
     RECEIPT_START("============W 편의점============"),

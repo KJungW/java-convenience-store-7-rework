@@ -1,11 +1,11 @@
 package store.service;
 
 import java.util.List;
-import store.constant.Separator;
 import store.constant.input.InputRegularExpression;
 import store.constant.input.InputRounder;
+import store.constant.input.InputSeparator;
 import store.constant.input.YesOrNo;
-import store.constant.input_output_message.InputExceptionMessage;
+import store.constant.view_message.InputExceptionMessage;
 import store.domain.BasketItem;
 import store.dto.AdditionalGiftItem;
 import store.dto.NonPromotableItem;
@@ -141,14 +141,14 @@ public class InputService {
     private BasketItem parseBasketItem(String input) {
         input = input.replace(InputRounder.SQUARE_BRACKETS_LEFT.getContent(), "");
         input = input.replace(InputRounder.SQUARE_BRACKETS_RIGHT.getContent(), "");
-        List<String> basketItemParts = List.of(input.split(Separator.HYPHEN.getContent()));
+        List<String> basketItemParts = List.of(input.split(InputSeparator.HYPHEN.getContent()));
         String name = basketItemParts.get(0);
         int quantity = Integer.parseInt(basketItemParts.get(1));
         return new BasketItem(name, quantity);
     }
 
     private List<BasketItem> parseBasketItems(String input) {
-        List<String> rawBasketItems = List.of(input.split(Separator.COMMA.getContent()));
+        List<String> rawBasketItems = List.of(input.split(InputSeparator.COMMA.getContent()));
         return rawBasketItems.stream()
                 .map(this::parseBasketItem)
                 .toList();

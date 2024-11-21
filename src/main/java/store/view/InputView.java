@@ -1,7 +1,7 @@
 package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import store.constant.input_output_message.InputGuideMessage;
+import store.constant.view_message.InputGuideMessage;
 import store.dto.AdditionalGiftItem;
 import store.dto.NonPromotableItem;
 
