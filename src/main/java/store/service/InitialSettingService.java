@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import store.constant.exception_message.ServiceExceptionMessage;
 import store.constant.input.InputSeparator;
+import store.constant.parsing.DateParsingFormat;
+import store.constant.parsing.ProductParsingFormat;
+import store.constant.parsing.PromotionParsingFormat;
 import store.domain.Product;
 import store.domain.Promotion;
 import store.repository.ProductRepository;
@@ -47,19 +50,19 @@ public class InitialSettingService {
 
     private Promotion parsePromotion(String rawPromotion) {
         List<String> promotionParts = List.of(rawPromotion.split(InputSeparator.COMMA.getContent()));
-        String name = promotionParts.get(0);
-        int purchaseCount = Integer.parseInt(promotionParts.get(1));
-        int giftCount = Integer.parseInt(promotionParts.get(2));
-        LocalDateTime startDate = parseDate(promotionParts.get(3));
-        LocalDateTime endDate = parseDate(promotionParts.get(4));
+        String name = promotionParts.get(PromotionParsingFormat.NAME.getIndex());
+        int purchaseCount = Integer.parseInt(promotionParts.get(PromotionParsingFormat.PURCHASE_COUNT.getIndex()));
+        int giftCount = Integer.parseInt(promotionParts.get(PromotionParsingFormat.GIFT_COUNT.getIndex()));
+        LocalDateTime startDate = parseDate(promotionParts.get(PromotionParsingFormat.START_DATE.getIndex()));
+        LocalDateTime endDate = parseDate(promotionParts.get(PromotionParsingFormat.END_DATE.getIndex()));
         return new Promotion(name, purchaseCount, giftCount, startDate, endDate);
     }
 
     private LocalDateTime parseDate(String rawDate) {
         List<String> dateParts = List.of(rawDate.split(InputSeparator.HYPHEN.getContent()));
-        int year = Integer.parseInt(dateParts.get(0));
-        int month = Integer.parseInt(dateParts.get(1));
-        int day = Integer.parseInt(dateParts.get(2));
+        int year = Integer.parseInt(dateParts.get(DateParsingFormat.YEAR.getIndex()));
+        int month = Integer.parseInt(dateParts.get(DateParsingFormat.MONTH.getIndex()));
+        int day = Integer.parseInt(dateParts.get(DateParsingFormat.DAY.getIndex()));
         return LocalDateTime.of(year, month, day, DEFAULT_TIME_VALUE, DEFAULT_TIME_VALUE, DEFAULT_TIME_VALUE);
     }
 
@@ -84,10 +87,10 @@ public class InitialSettingService {
 
     private Product parseProduct(String rawProduct) {
         List<String> promotionParts = List.of(rawProduct.split(InputSeparator.COMMA.getContent()));
-        String name = promotionParts.get(0);
-        int price = Integer.parseInt(promotionParts.get(1));
-        int quantity = Integer.parseInt(promotionParts.get(2));
-        String promotionName = promotionParts.get(3);
+        String name = promotionParts.get(ProductParsingFormat.NAME.getIndex());
+        int price = Integer.parseInt(promotionParts.get(ProductParsingFormat.PRICE.getIndex()));
+        int quantity = Integer.parseInt(promotionParts.get(ProductParsingFormat.QUANTITY.getIndex()));
+        String promotionName = promotionParts.get(ProductParsingFormat.PROMOTION_NAME.getIndex());
         if (promotionName.equals(NULL_PROMOTION_NAME_IN_FILE)) {
             return new Product(name, price, quantity);
         }
