@@ -46,6 +46,7 @@ public class ConvenienceStoreController {
         processNonPromotableItem();
         Receipt receipt = purchaseService.purchase();
         receipt = applyMembershipDiscount(receipt);
+        outputService.printReceipt(receipt);
     }
 
     private void printStartGuideMessage() {
