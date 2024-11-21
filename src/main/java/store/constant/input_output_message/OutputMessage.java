@@ -10,7 +10,8 @@ public enum OutputMessage {
     RECEIPT_PURCHASE_PRICE("총구매액           \t%-15d\t%,d"),
     RECEIPT_GIFT_PRICE("행사할인           \t               \t-%,d"),
     RECEIPT_MEMBERSHIP_DISCOUNT("멤버십할인         \t               \t-%,d"),
-    RECEIPT_PRICE_TO_PAY("내실돈        \t                   \t%,d");
+    RECEIPT_PRICE_TO_PAY("내실돈        \t                   \t%,d"),
+    ERROR_MESSAGE_PREFIX("[Error] ");
 
     private final String message;
 
