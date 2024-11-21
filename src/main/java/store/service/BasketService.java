@@ -51,7 +51,7 @@ public class BasketService {
         }
     }
 
-    private boolean checkEnoughQuantityForBasketItem(BasketItem basketItem) {
+    public boolean checkEnoughQuantityForBasketItem(BasketItem basketItem) {
         Product product = productRepository.find(basketItem.getName());
         return product.isEnoughQuantity(basketItem.getQuantity());
     }
@@ -62,7 +62,7 @@ public class BasketService {
         }
     }
 
-    private boolean checkProductExistenceForBasketItem(BasketItem basketItem) {
+    public boolean checkProductExistenceForBasketItem(BasketItem basketItem) {
         return productRepository.checkExistence(basketItem.getName());
     }
 

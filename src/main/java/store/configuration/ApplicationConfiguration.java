@@ -27,10 +27,6 @@ public class ApplicationConfiguration {
             = new BasketItemRepository();
     private final InitialSettingService initialSettingService
             = new InitialSettingService(productRepository, promotionRepository);
-    private final OutputService outputService
-            = new OutputService(outputView, productRepository);
-    private final InputService inputService
-            = new InputService((inputView));
     private final BasketService basketService
             = new BasketService(basketItemRepository, productRepository);
     private final PromotionService promotionService
@@ -39,6 +35,10 @@ public class ApplicationConfiguration {
             = new PurchaseService(basketItemRepository, productRepository, promotionRepository);
     private final MembershipService membershipService
             = new MembershipService();
+    private final OutputService outputService
+            = new OutputService(outputView, productRepository);
+    private final InputService inputService
+            = new InputService(inputView, outputView, basketService);
 
     public InitialSettingService getInitialSettingService() {
         return initialSettingService;
