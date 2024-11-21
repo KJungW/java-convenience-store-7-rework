@@ -78,7 +78,7 @@ public class OutputService {
         outputView.printContent(OutputMessage.RECEIPT_PURCHASE_HEADER.getMessage());
         for (PurchasedItem item : items) {
             String content = String.format(OutputMessage.RECEIPT_PURCHASE_CONTENT.getMessage(),
-                    item.getProductName(), item.getQuantity(), item.getPrice());
+                    item.getProductName(), item.getQuantity(), item.calculateFullPrice());
             outputView.printContent(content);
         }
     }
