@@ -57,19 +57,11 @@ public class Product {
         commonQuantity -= quantity;
     }
 
-    public void addPromotionQuantity(int quantity) {
-        promotionQuantity += quantity;
-    }
-
     public void subtractPromotionQuantity(int quantity) {
         if (promotionQuantity - quantity < DefaultValue.MINIMUM_QUANTITY) {
             throw new IllegalArgumentException(DomainExceptionMessage.QUANTITY_SUBTRACTION_IS_IMPOSSIBLE.getMessage());
         }
         promotionQuantity -= quantity;
-    }
-
-    public boolean isEmptyQuantity() {
-        return commonQuantity + promotionQuantity <= DEFAULT_QUANTITY;
     }
 
     public boolean isEnoughQuantity(int quantity) {
