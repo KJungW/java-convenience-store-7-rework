@@ -75,6 +75,10 @@ public class Product {
         return commonQuantity + promotionQuantity >= quantity;
     }
 
+    public boolean isEnoughCommonQuantity(int quantity) {
+        return commonQuantity >= quantity;
+    }
+
     public boolean isEnoughPromotionQuantity(int quantity) {
         return promotionQuantity >= quantity;
     }

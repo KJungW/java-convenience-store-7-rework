@@ -4,17 +4,22 @@ import java.util.List;
 import store.constant.exception_message.ServiceExceptionMessage;
 import store.domain.BasketItem;
 import store.domain.Product;
+import store.domain.Promotion;
 import store.repository.BasketItemRepository;
 import store.repository.ProductRepository;
+import store.repository.PromotionRepository;
 
 public class BasketService {
 
     private final BasketItemRepository basketItemRepository;
     private final ProductRepository productRepository;
+    private final PromotionRepository promotionRepository;
 
-    public BasketService(BasketItemRepository basketItemRepository, ProductRepository productRepository) {
+    public BasketService(BasketItemRepository basketItemRepository, ProductRepository productRepository,
+            PromotionRepository promotionRepository) {
         this.basketItemRepository = basketItemRepository;
         this.productRepository = productRepository;
+        this.promotionRepository = promotionRepository;
     }
 
     public void addBasketItems(List<BasketItem> newBasketItems) {
@@ -45,25 +50,29 @@ public class BasketService {
         basketItemRepository.delete(basketItem.getName());
     }
 
+    public boolean checkEnoughQuantityForBasketItem(BasketItem basketItem) {
+        Product product = productRepository.find(basketItem.getName());
+        boolean isPromoted = checkPromotionInProductIsAvailable(product);
+        if (isPromoted) {
+            return product.isEnoughQuantity(basketItem.getQuantity());
+        }
+        return product.isEnoughCommonQuantity(basketItem.getQuantity());
+    }
+
+    public boolean checkProductExistenceForBasketItem(BasketItem basketItem) {
+        return productRepository.checkExistence(basketItem.getName());
+    }
+
     private void validateEnoughQuantityForBasketItem(BasketItem basketItem) {
         if (!checkEnoughQuantityForBasketItem(basketItem)) {
             throw new IllegalArgumentException(ServiceExceptionMessage.NOT_ENOUGH_PRODUCT_QUANTITY.getMessage());
         }
     }
 
-    public boolean checkEnoughQuantityForBasketItem(BasketItem basketItem) {
-        Product product = productRepository.find(basketItem.getName());
-        return product.isEnoughQuantity(basketItem.getQuantity());
-    }
-
     private void validateProductExistenceForBasketItem(BasketItem basketItem) {
         if (!checkProductExistenceForBasketItem(basketItem)) {
             throw new IllegalArgumentException(ServiceExceptionMessage.NOT_EXIST_PRODUCT.getMessage());
         }
-    }
-
-    public boolean checkProductExistenceForBasketItem(BasketItem basketItem) {
-        return productRepository.checkExistence(basketItem.getName());
     }
 
     private void validateBasketItemExistence(String productName) {
@@ -84,5 +93,13 @@ public class BasketService {
 
     private boolean checkQuantitySubtractionIsPossible(BasketItem basketItem, int quantity) {
         return basketItem.checkQuantitySubtractionIsPossible(quantity);
+    }
+
+    private boolean checkPromotionInProductIsAvailable(Product product) {
+        if (!product.checkIsPromoted()) {
+            return false;
+        }
+        Promotion promotion = promotionRepository.find(product.getPromotionName());
+        return promotion.isAvailable();
     }
 }

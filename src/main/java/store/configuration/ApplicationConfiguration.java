@@ -28,7 +28,7 @@ public class ApplicationConfiguration {
     private final InitialSettingService initialSettingService
             = new InitialSettingService(productRepository, promotionRepository);
     private final BasketService basketService
-            = new BasketService(basketItemRepository, productRepository);
+            = new BasketService(basketItemRepository, productRepository, promotionRepository);
     private final PromotionService promotionService
             = new PromotionService(basketItemRepository, productRepository, promotionRepository);
     private final PurchaseService purchaseService
