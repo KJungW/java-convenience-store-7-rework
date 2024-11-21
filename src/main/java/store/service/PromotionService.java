@@ -51,6 +51,14 @@ public class PromotionService {
         return nonPromotableItems;
     }
 
+    public boolean checkPromotionInProductIsAvailable(Product product) {
+        if (!product.checkIsPromoted()) {
+            return false;
+        }
+        Promotion promotion = promotionRepository.find(product.getPromotionName());
+        return promotion.isAvailable();
+    }
+
     private int calculateAdditionalGiftCount(BasketItem basketItem) {
         Product product = productRepository.find(basketItem.getName());
         if (!checkPromotionInProductIsAvailable(product)) {
@@ -71,13 +79,5 @@ public class PromotionService {
         }
         Promotion promotion = promotionRepository.find(product.getPromotionName());
         return promotion.calculateNonPromotableItemCount(basketItem.getQuantity(), product.getPromotionQuantity());
-    }
-
-    public boolean checkPromotionInProductIsAvailable(Product product) {
-        if (!product.checkIsPromoted()) {
-            return false;
-        }
-        Promotion promotion = promotionRepository.find(product.getPromotionName());
-        return promotion.isAvailable();
     }
 }

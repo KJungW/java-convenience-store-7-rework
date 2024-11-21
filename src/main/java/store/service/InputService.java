@@ -142,7 +142,7 @@ public class InputService {
         }
     }
 
-    public void validateYesOrNo(String input) {
+    private void validateYesOrNo(String input) {
         if (!input.matches(InputRegularExpression.YES_OR_NO_INPUT_FORMAT.getExpression())) {
             throw new InputException(InputExceptionMessage.INPUT_IS_NOT_YES_OR_NO.getMessage());
         }
