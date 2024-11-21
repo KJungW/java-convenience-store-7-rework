@@ -72,7 +72,7 @@ public class PromotionService {
         return promotion.calculateNonPromotableItemCount(basketItem.getQuantity(), product.getPromotionQuantity());
     }
 
-    private boolean checkPromotionInProductIsAvailable(Product product) {
+    public boolean checkPromotionInProductIsAvailable(Product product) {
         if (!product.checkIsPromoted()) {
             return false;
         }

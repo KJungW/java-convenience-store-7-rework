@@ -13,10 +13,13 @@ public class OutputService {
 
     private final OutputView outputView;
     private final ProductRepository productRepository;
+    private final PromotionService promotionService;
 
-    public OutputService(OutputView outputView, ProductRepository productRepository) {
+    public OutputService(OutputView outputView, ProductRepository productRepository,
+            PromotionService promotionService) {
         this.outputView = outputView;
         this.productRepository = productRepository;
+        this.promotionService = promotionService;
     }
 
     public void printWelcomeGreeting() {
@@ -31,7 +34,7 @@ public class OutputService {
     public void printProductsInStore() {
         List<Product> allProduct = productRepository.findAll();
         for (Product product : allProduct) {
-            if (product.checkIsPromoted()) {
+            if (promotionService.checkPromotionInProductIsAvailable(product)) {
                 printPromotionProduct(product);
                 printCommonProduct(product);
                 continue;

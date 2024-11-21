@@ -36,7 +36,7 @@ public class ApplicationConfiguration {
     private final MembershipService membershipService
             = new MembershipService();
     private final OutputService outputService
-            = new OutputService(outputView, productRepository);
+            = new OutputService(outputView, productRepository, promotionService);
     private final InputService inputService
             = new InputService(inputView, outputView, basketService);
 
