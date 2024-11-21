@@ -91,6 +91,7 @@ public class InputService {
 
     private List<BasketItem> tryInputBasketItems() {
         String rawInput = inputView.inputBasketItems();
+        rawInput = removeSpace(rawInput);
         validateRawInputBasketItems(rawInput);
         List<BasketItem> basketItems = parseBasketItems(rawInput);
         basketItems = removeDuplicateBasketItem(basketItems);
@@ -100,24 +101,28 @@ public class InputService {
 
     private boolean tryInputAdditionalGiftItemAcceptance(AdditionalGiftItem giftItem) {
         String rawInput = inputView.inputAdditionalGiftItemAcceptance(giftItem);
+        rawInput = removeSpace(rawInput);
         validateYesOrNo(rawInput);
         return parseYesOrNo(rawInput);
     }
 
     private boolean tryInputNonPromotableItemAcceptance(NonPromotableItem promotableItem) {
         String rawInput = inputView.inputNonPromotableItemAcceptance(promotableItem);
+        rawInput = removeSpace(rawInput);
         validateYesOrNo(rawInput);
         return parseYesOrNo(rawInput);
     }
 
     private boolean tryInputMembershipDiscountAcceptance() {
         String rawInput = inputView.inputMembershipDiscountAcceptance();
+        rawInput = removeSpace(rawInput);
         validateYesOrNo(rawInput);
         return parseYesOrNo(rawInput);
     }
 
     private boolean tryInputShoppingContinuation() {
         String rawInput = inputView.inputShoppingContinuation();
+        rawInput = removeSpace(rawInput);
         validateYesOrNo(rawInput);
         return parseYesOrNo(rawInput);
     }
@@ -174,5 +179,9 @@ public class InputService {
             result.put(item.getName(), item);
         }
         return result.values().stream().toList();
+    }
+
+    private String removeSpace(String rawInput) {
+        return rawInput.strip().replace(DefaultValue.SPACE_TEXT, DefaultValue.EMPTY_TEXT);
     }
 }
